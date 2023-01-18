@@ -140,8 +140,13 @@ app.get('/products/:pid', (req, res) => {
   let pid = req.params.pid;
 
   pm.getProductById(pid).then((product) => {
-    console.log(product)
-    res.send(product)
+    if (product) {
+      console.log(product)
+      res.send(product)
+    }
+    else {
+      res.status(404).json({ error: "Producto No Encontrado" });
+    }
   })
 })
 
