@@ -1,29 +1,39 @@
 const { Router } = require('express');
-// import { uploader } from '../utils.js';
+const Carts = require('./class.carts');
 const router = Router();
+const carts = new Carts();
 
 //let users = [];
 
 
-router.get('/', (req, res) => {
-    res.send({ message: 'hi user get asasas' })
+router.get('/:cid', (req, res) => {
+    if (!req.params.cid)
+        res.status(400).json({ error: 'Cart not found' })
+
+    carts.getProductsByCid(req.params.cid).then((result) => {
+        if (result)
+            res.send(result)
+        else res.status(400).json({ error: 'Cart not found' })
+    })
 });
 
 router.post('/', (req, res) => {
-    res.send({ message: 'hi user post' })
+    carts.addCart().then((result) => {
+        console.log(result)
+        if (result)
+            res.send(result)
+        else
+            res.status(500).json({ error: 'Server error' })
+    });
 });
 
-// router.post('/',uploader.single('file'),(req, res) => {
-//     if(!req.file) 
-//         return res.status(400).send({status:'error', error:'no se pudo cargar'});
-//     console.log(req.file);
-//     let user = req.body;
+router.post('/:cid/product/:pid', (req, res) => {
+    //primero, debo obtener el cart en base al cid
+    carts.addProduct(req.params.cid, req.params.pid)
 
-//     user.profile = req.file.path;
-//     user.push(user);
-//     res.send({status:'success',message:'User created'});
- 
 
-// })
+
+
+});
 
 module.exports = router
