@@ -1,4 +1,3 @@
-const users = require('../users/controller.users')
 const carts = require('../carts/controller.carts')
 const products = require('../products/controller.products')
 
