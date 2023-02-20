@@ -36,11 +36,11 @@ socketServer.on("connection", (socket) => {
   const id = socket.id;
 
   socket.on("realtimeproducts", (data) => {
-   // console.log(data + `from ${id}`);
+    console.log(data + `from ${id}`);
 
     products.getProducts().then((data) => {
       const result = {
-        products2: JSON.stringify(data),
+        products2: data,
       };
       socket.emit("obtainProducts", result);
     });
