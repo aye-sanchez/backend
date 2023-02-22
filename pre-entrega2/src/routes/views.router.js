@@ -1,6 +1,6 @@
 const { Router } = require('express')
 const router = Router()
-const Products = require('../dao/models/class.products');
+const Products = require('../dao/classes/class.products');
 const products = new Products();
 
 router.get('/', (req, res) => {
