@@ -9,17 +9,56 @@ const ProductsModel = require('../dao/models/products.models')
 router.get('/', async (req, res) => {    
     //Recupero request
     let limit = req.query.limit;
+    let page = req.query.page;
+    let query = req.query.query;
+    let sort = req.query.sort;
+
+    if(!limit)
+        limit = 10
+    if(!page)
+        page = 1
+    if(!query)
+        query = {}
+    if(sort == 'asc')
+        sort = { price: 'asc' }
+    else if (sort == 'desc') 
+        sort = { price: 'desc' }
+
+    let options = {
+        page: page, 
+        limit: limit, 
+        sort: sort
+    }
+
     try {
-        const products = await ProductsModel.find()
+        const products = await ProductsModel.paginate(query,options)
         
-        res.json({ message: products})
+        let prevLink = null
+        if(products.hasPrevPage)
+            prevLink = 'armar link previo'
+        let nextLink = null
+        if(products.hasNextPage)
+            nextLink = 'armar link siguiente'
         
-        //res.send('llego hasta products api')
+        res.json({ 
+            status: 'success',
+            payload: products.docs,
+            totalPages: products.totalPages,
+            page: products.page,
+            prevPage: products.prevPage,
+            nextPage: products.nextPage,
+            hasPrevPage: products.hasPrevPage,
+            hasNextPage: products.hasNextPage,
+            prevLink: prevLink,
+            nextLink: nextLink
+         })
 
     } catch(error) {
 
     }
-     
+
+
+
     //Manejado con archivos FS
     // products.getProducts().then((data) => {
     //     if (!limit)

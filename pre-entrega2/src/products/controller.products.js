@@ -9,8 +9,16 @@ const ProductsDB = require('../dao/models/products.models')
 router.get('/', async (req, res) => {
     //Recupero request
     let limit = req.query.limit;
+    let page = req.query.page;
+    let query = req.query.query;
+    let sort = req.query.sort;
+
+    if(!limit)
+        limit = 10
+    
+
     try {
-        const products = await ProductsDB.find()
+        const products = await ProductsDB.paginate({limit: limit})
         res.json(products)
     } catch (error) {
         

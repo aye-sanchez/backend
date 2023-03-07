@@ -1,0 +1,11 @@
+[
+  {
+    "title": "mermerlada",
+    "description": "modificado",
+    "price": "350",
+    "thumbnail": "sin imagen",
+    "code": "fruti001",
+    "stock": "6333333",
+    "id": 2
+  }
+]

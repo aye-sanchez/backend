@@ -5,7 +5,7 @@ const express = require("express");
 const routes = require("./routes");
 const handlebars = require("express-handlebars");
 const { Server } = require("socket.io");
-const Products = require('./dao/models/class.products');
+const Products = require('./dao/classes/class.products');
 const products = new Products();
 const mongoose = require('mongoose')
 
